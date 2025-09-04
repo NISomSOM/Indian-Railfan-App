@@ -27,23 +27,22 @@ fun AppView() {
     val viewModel: MainViewModel=viewModel()
     val viewState by viewModel.locoState
 
-    // Get the current route to determine if the bottom bar should be shown
+    //Get the current screen to check if the bottom bar should be shown
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    // Define the list of routes that should show the bottom bar
+    //The list of screens that should show bottom bar
     val bottomBarRoutes = setOf(Screen.Home.route, Screen.Search.route, Screen.Gallery.route, Screen.Compare.route)
     val shouldShowBottomBar = currentRoute in bottomBarRoutes
 
     Scaffold(
         bottomBar = {
-            // Conditionally display the BottomAppBar
+            //Conditionally display the bottom bar
             if (shouldShowBottomBar) {
                 AppBottomBar(navController = navController)
             }
         }
     ) { innerPadding ->
-        // NavHost contains all the screen destinations
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -59,7 +58,7 @@ fun AppView() {
             composable(Screen.Gallery.route) { GalleryView() }
             composable(Screen.Compare.route) { CompareView() }
 
-            // This is the destination that will NOT have the bottom bar
+            //This is the screen that will NOT have the bottom bar
             composable(Screen.LocoDetail.route){
                 val loco = navController.previousBackStackEntry?.savedStateHandle?.
                 get<Locomotive>("locomotive") ?: Locomotive("","","","")
