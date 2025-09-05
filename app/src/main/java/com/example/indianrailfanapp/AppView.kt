@@ -61,8 +61,8 @@ fun AppView() {
             //This is the screen that will NOT have the bottom bar
             composable(Screen.LocoDetail.route){
                 val loco = navController.previousBackStackEntry?.savedStateHandle?.
-                get<Locomotive>("locomotive") ?: Locomotive("","","","")
-                LocoDetailScreen(loco,navController = navController)
+                get<Locomotive>("locomotive") ?: Locomotive("","","","","","","","","")
+                LocoDetailScreen(loco)
             }
         }
     }

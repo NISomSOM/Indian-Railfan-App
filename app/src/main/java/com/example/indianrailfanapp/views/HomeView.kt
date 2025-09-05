@@ -1,6 +1,7 @@
 package com.example.indianrailfanapp.views
 
 import android.util.Log
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,6 +55,7 @@ fun HomeView(navigateToDetail: (Locomotive) -> Unit, viewState: MainViewModel.Lo
         "Diesel" -> viewState.list.filter { it.locoType == "diesel" }
         else -> viewState.list
     }
+    var isToggled by rememberSaveable { mutableStateOf(false) }
 
 
     Column() {
@@ -89,17 +92,17 @@ fun HomeView(navigateToDetail: (Locomotive) -> Unit, viewState: MainViewModel.Lo
             IconButton(onClick = {
                 selectedFilter = "All"
             }) {
-                Icon(imageVector = Icons.Filled.AllInclusive, contentDescription = "All")
+                Icon(imageVector = Icons.Filled.AllInclusive, contentDescription = "All",tint= if (selectedFilter=="All") Color(3, 152, 252) else MaterialTheme.colorScheme.onBackground)
             }
             IconButton(onClick = {
                 selectedFilter = "Electric"
             }) {
-                Icon(imageVector = Icons.Filled.ElectricBolt, contentDescription = "Electric")
+                Icon(imageVector = Icons.Filled.ElectricBolt, contentDescription = "Electric",tint= if (selectedFilter=="Electric") Color(3, 152, 252) else MaterialTheme.colorScheme.onBackground)
             }
             IconButton(onClick = {
                 selectedFilter = "Diesel"
             }) {
-                Icon(imageVector = Icons.Filled.LocalGasStation, contentDescription = "Diesel")
+                Icon(imageVector = Icons.Filled.LocalGasStation, contentDescription = "Diesel",tint= if (selectedFilter=="Diesel") Color(3, 152, 252) else MaterialTheme.colorScheme.onBackground)
             }
         }
         Box(
@@ -125,17 +128,18 @@ fun HomeView(navigateToDetail: (Locomotive) -> Unit, viewState: MainViewModel.Lo
 
 @Composable
 fun LocoList(locomotives: List<Locomotive>, navigateToDetail: (Locomotive) -> Unit) {
-    LazyVerticalGrid(GridCells.Fixed(2),modifier=Modifier.fillMaxSize()){
-        items(locomotives){
-            LocoItem(it, navigateToDetail)
+    LazyVerticalGrid(GridCells.Fixed(2),modifier=Modifier.fillMaxSize().animateContentSize()){
+        items(locomotives, key={it.locoId}){
+            LocoItem(it, navigateToDetail, modifier = Modifier
+                .animateItem())
         }
     }
 }
 
 @Composable
-fun LocoItem(locomotive: Locomotive,navigateToDetail:(Locomotive)->Unit) {
+fun LocoItem(locomotive: Locomotive,navigateToDetail:(Locomotive)->Unit, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
             .clickable {

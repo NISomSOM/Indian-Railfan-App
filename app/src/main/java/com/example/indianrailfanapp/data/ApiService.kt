@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-private val retrofit = Retrofit.Builder().baseUrl("https://gist.githubusercontent.com/NISomSOM/4a5d481f65caff5b5c156f6cf87ee523/raw/592c46890180ed4b5a9bca8c5eae0697cbe1088d/")
+private val retrofit = Retrofit.Builder().baseUrl("https://gist.githubusercontent.com/NISomSOM/4a5d481f65caff5b5c156f6cf87ee523/raw/2d45a85e4830599bd434aeb3fdeefd94d99f0377/")
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 

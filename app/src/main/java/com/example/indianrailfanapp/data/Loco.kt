@@ -9,7 +9,12 @@ data class Locomotive(
     val locoId:String,
     val locoName:String,
     val locoType:String,
-    val locoImage:String
+    val locoImage:String,
+    val locoDescription: String,
+    val locoTopSpeed: String,
+    val locoLifeSpan: String,
+    val locoTotalProduced: String,
+    val locoHorsePower: String
 ): Parcelable
 
 data class LocoResponse(
