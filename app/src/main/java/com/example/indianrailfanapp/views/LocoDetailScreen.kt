@@ -1,5 +1,7 @@
 package com.example.indianrailfanapp.views
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +21,10 @@ import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Timeline
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,18 +54,33 @@ fun LocoDetailScreen(loco: Locomotive) {
             )}
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Centered stats row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            StatItem(icon = Icons.Default.Speed, label = "Speed", value = loco.locoTopSpeed)
-            StatItem(icon = Icons.Default.Bolt, label = "Power", value = loco.locoHorsePower)
-            StatItem(icon = Icons.Default.Timeline, label = "Lifespan", value = loco.locoLifeSpan)
-            StatItem(icon = Icons.Default.Build, label = "Units", value = loco.locoTotalProduced)
+        Card(modifier = Modifier.padding(top=8.dp,bottom=4.dp,start=16.dp,end=16.dp),
+                colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.secondary),
+                border = CardDefaults.outlinedCardBorder(),
+                elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp)
+                ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                StatItem(icon = Icons.Default.Speed, label = "Speed", value = loco.locoTopSpeed)
+                StatItem(icon = Icons.Default.Bolt, label = "Power", value = loco.locoHorsePower)
+                StatItem(
+                    icon = Icons.Default.Timeline,
+                    label = "Lifespan",
+                    value = loco.locoLifeSpan
+                )
+                StatItem(
+                    icon = Icons.Default.Build,
+                    label = "Units",
+                    value = loco.locoTotalProduced
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))

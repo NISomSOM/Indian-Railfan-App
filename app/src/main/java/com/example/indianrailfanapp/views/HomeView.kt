@@ -41,6 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.indianrailfanapp.MainViewModel
 import com.example.indianrailfanapp.data.Locomotive
@@ -82,20 +83,33 @@ fun HomeView(navigateToDetail: (Locomotive) -> Unit, viewState: MainViewModel.Lo
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) { i ->
                 val item = viewState.list[i] //item is a loco right now
-                Log.d("CarouselItemDebug", "Item image URL: ${item.locoImage}")
-                AsyncImage(
-                    model = item.locoImage,
-                    modifier = Modifier
-                        .height(300.dp),
-                    contentDescription = item.locoName,
-                    contentScale = ContentScale.Crop,
-                    onSuccess = { result ->
-                        Log.d("CoilCSuccess", "Successfully loaded image: ${item.locoImage}")
-                    },
-                    onError = { error ->
-                        Log.e("CoilCError", "Error loading image: ${item.locoImage}", error.result.throwable)
-                    }
-                )
+                Box(modifier = Modifier.fillMaxSize()
+                                        .clickable {
+                                           navigateToDetail(item)}
+                ) {
+                    AsyncImage(
+                        model = item.locoImage,
+                        modifier = Modifier
+                            .height(300.dp),
+                        contentDescription = item.locoName,
+                        contentScale = ContentScale.Crop,
+                        onSuccess = { result ->
+                            Log.d("CoilCSuccess", "Successfully loaded image: ${item.locoImage}")
+                        },
+                        onError = { error ->
+                            Log.e(
+                                "CoilCError",
+                                "Error loading image: ${item.locoImage}",
+                                error.result.throwable
+                            )
+                        }
+                    )
+                    Text(
+                        text = item.locoName,
+                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 25.sp, color = Color.White),
+                        modifier = Modifier.align(Alignment.BottomCenter)
+                    )
+                }
             }
         }
         Row() {

@@ -13,8 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
+    primary = Blue80,
+    secondary = LightBlue80,
     tertiary = Pink80,
     onBackground = Color(0xFFFFFFFF)
 )
@@ -40,7 +40,7 @@ private val LightColorScheme = lightColorScheme(
 fun IndianRailfanAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
