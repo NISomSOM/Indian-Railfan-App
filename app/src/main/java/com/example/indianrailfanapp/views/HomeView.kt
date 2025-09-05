@@ -23,6 +23,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
@@ -62,7 +63,7 @@ fun HomeView(navigateToDetail: (Locomotive) -> Unit, viewState: MainViewModel.Lo
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(top = 16.dp, bottom = 8.dp)
-                    .height(350.dp),
+                    .height(250.dp),
                 itemWidth = 300.dp,
                 itemSpacing = 8.dp,
                 contentPadding = PaddingValues(horizontal = 16.dp)
@@ -158,7 +159,7 @@ fun LocoItem(locomotive: Locomotive,navigateToDetail:(Locomotive)->Unit) {
         )
         Text(
             text = locomotive.locoName,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             style = TextStyle(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(top = 4.dp)
         )
