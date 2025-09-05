@@ -29,10 +29,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.indianrailfanapp.MainViewModel
 import com.example.indianrailfanapp.data.Locomotive
+import kotlinx.coroutines.delay
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,13 +56,22 @@ fun HomeView(navigateToDetail: (Locomotive) -> Unit, viewState: MainViewModel.Lo
         "Diesel" -> viewState.list.filter { it.locoType == "diesel" }
         else -> viewState.list
     }
-    var isToggled by rememberSaveable { mutableStateOf(false) }
 
+    val carouselState= rememberCarouselState {viewState.list.count()}
+    LaunchedEffect(carouselState, viewState.list.isNotEmpty()){
+        if(viewState.list.isNotEmpty()) {
+            while(true) {
+                delay(3000)
+                val nextPage= (carouselState.currentItem+1)%viewState.list.count()
+                carouselState.animateScrollToItem(nextPage)
+            }
+        }
+    }
 
     Column() {
         if (viewState.list.isNotEmpty()) { //Because carousel only checks the list once at the start, and our list will be empty at the start due to loading from api
             HorizontalUncontainedCarousel(
-                state = rememberCarouselState { viewState.list.count() },
+                state = carouselState,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
