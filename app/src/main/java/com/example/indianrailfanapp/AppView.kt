@@ -54,7 +54,12 @@ fun AppView() {
                     navController.navigate(Screen.LocoDetail.route)
                 })
             }
-            composable(Screen.Search.route) { SearchView() }
+            composable(Screen.Search.route) {
+                SearchView(viewState=viewState, navigateToDetail = {
+                    navController.currentBackStackEntry?.savedStateHandle?.set("locomotive",it)
+                    navController.navigate(Screen.LocoDetail.route)
+                })
+            }
             composable(Screen.Gallery.route) { GalleryView() }
             composable(Screen.Compare.route) { CompareView() }
 
